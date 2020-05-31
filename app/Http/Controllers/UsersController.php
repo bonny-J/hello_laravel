@@ -16,7 +16,7 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user'));//将模型对象转换成数组并作为参数传递给视图
     }
 
 
@@ -33,6 +33,7 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password), //md5储存
         ]);
+        Auth::login($user);
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show', [$user]); //重定向
 
